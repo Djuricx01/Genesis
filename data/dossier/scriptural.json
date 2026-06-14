@@ -1,0 +1,145 @@
+{
+  "_convention": "Scriptural-lens dossier (Phase 4). SAME discipline as cradles.json: dates are AxisYear (proleptic Gregorian decimal, no year zero; src/timeline/era.ts), prose is original/neutral, every claim carries confidence + source, and contested identifications must have a complete RESEARCH_LOG entry (RL-006) before shipping. This layer presents the scriptural geography as the tradition reads it AND what the evidence shows, never asserting located fact where scholarship is unsettled (§2, §10).",
+  "chronologies": [
+    {
+      "id": "ussher",
+      "label": "Ussher (Masoretic)",
+      "creationBCE": 4004,
+      "note": "Archbishop James Ussher's 1650 chronology, built on the Masoretic genealogies: Creation 4004 BCE, the Flood 2348 BCE, the dispersion from Babel c. 2242 BCE. The familiar 'young' biblical timeline."
+    },
+    {
+      "id": "lxx",
+      "label": "Septuagint (LXX)",
+      "creationBCE": 5500,
+      "note": "The Greek Septuagint preserves longer pre-Flood genealogies, pushing Creation to roughly 5500 BCE and the Flood to roughly 3250 BCE. This matters here: a ~5500 BCE Creation lands within reach of the settled-farming horizon the scientific lens dates in Egypt and the Fertile Crescent (~5500 BCE): the one point where the two chronologies brush against each other."
+    }
+  ],
+  "rivers": [
+    { "name": "Tigris", "biblicalName": "Hiddekel", "compasses": "runs east of Asshur (Assyria)", "identifiedAs": "the Tigris, named and located", "confidence": "solid" },
+    { "name": "Euphrates", "biblicalName": "Perath", "compasses": "named directly, no gloss needed", "identifiedAs": "the Euphrates, named and located", "confidence": "solid" },
+    { "name": "Pishon", "biblicalName": "Pishon", "compasses": "compasses Havilah, 'where there is gold'", "identifiedAs": "Wadi al-Batin / Rimah–Batin paleochannel (proposed)", "confidence": "contested" },
+    { "name": "Gihon", "biblicalName": "Gihon", "compasses": "compasses the land of Cush", "identifiedAs": "the Karun in SW Iran (proposed); Cush disputed", "confidence": "contested" }
+  ],
+  "spectrum": {
+    "intro": "Same ground, two timelines. How people relate the scientific record this map is built from to the scriptural account ranges across a spectrum. Here are four positions, each shown with where it is strong and where it strains, none endorsed.",
+    "views": [
+      {
+        "name": "Young-Earth Creation",
+        "chronology": "Ussher: Creation ~4004 BCE",
+        "reads": "The genealogies are literal, near-complete history: Creation, the Flood, and Babel are real, datable events a few thousand years ago, and the scientific dates are mistaken or reflect a different framework.",
+        "strength": "Takes the text's plain sense and its own internal chronology seriously, and is internally coherent if the genealogies are read as continuous.",
+        "strain": "Collides head-on with the record this very map shows: farming, cities, and writing all predate 4004 BCE by millennia. It requires rejecting or radically recompressing radiometric, archaeological, and astronomical dating that otherwise agree."
+      },
+      {
+        "name": "Old-Earth / Day-Age Creation",
+        "chronology": "Ancient earth; LXX sometimes enlisted",
+        "reads": "The 'days' are long ages or a literary frame. The earth and universe are genuinely old, but God acts decisively at key points, including the arrival of humanity.",
+        "strength": "Keeps an ancient earth and most of mainstream physics and geology while preserving a Creator and a real Adam. The Septuagint's longer chronology is sometimes used to stretch the biblical dates toward the evidence.",
+        "strain": "The concordance is loose: matching the 'days' to geological eras forces reorderings (plants before the sun; birds before land animals), and exactly where God intervenes is difficult to tie to any evidence."
+      },
+      {
+        "name": "Evolutionary Creation",
+        "chronology": "Full scientific timeline",
+        "reads": "Evolution and deep time are how creation happened; Genesis tells the theological truth about who created and why, not the scientific how. Often called theistic evolution.",
+        "strength": "No conflict with the dated record at all: it accepts everything the scientific lens shows, and locates the text's authority in meaning rather than mechanism.",
+        "strain": "Must read Adam, the Fall, a global Flood, and the genealogies symbolically or non-literally. Critics argue this loosens the historical claims the text seems to make and the doctrines later built on them."
+      },
+      {
+        "name": "Naturalistic reading",
+        "chronology": "Scientific record only",
+        "reads": "Genesis is ancient Near-Eastern theology and origin-story: meaningful as literature and worldview, not as history. No divine action is invoked to explain the past.",
+        "strength": "Follows only the physical evidence this map is assembled from; it is predictive, self-consistent, and makes no claims it cannot test.",
+        "strain": "By design it brackets out the questions the tradition cares about most (purpose, and the origin of moral order) and treats the text purely as artifact, which believers say misreads what it is for."
+      }
+    ],
+    "convergence": "The one place the two chronologies brush against each other: the Septuagint's longer genealogies push Creation back to roughly 5500 BCE, within reach of the settled-farming horizon this map dates in Egypt and the Fertile Crescent (~5500 BCE). It does not reconcile the accounts (cities, writing, and human remains still run far older), but it is the point where a biblical chronology and the archaeological record come closest to touching."
+  },
+  "sites": [
+    {
+      "id": "eden",
+      "name": "Eden",
+      "subtitle": "the garden and the source of four rivers",
+      "scripture": "Genesis 2:8–14",
+      "coordinates": [48.5, 30.1],
+      "kind": "zone",
+      "confidence": "contested",
+      "appearsAt": { "ussher": -4003, "lxx": -5499 },
+      "identifications": [
+        { "label": "Hiddekel: Tigris", "display": "runs east of Asshur, securely the Tigris", "confidence": "solid" },
+        { "label": "Perath: Euphrates", "display": "named directly, securely the Euphrates", "confidence": "solid" },
+        { "label": "Pishon: ?", "display": "Wadi al-Batin paleochannel; 'compasses Havilah, where there is gold'", "confidence": "contested" },
+        { "label": "Gihon: ?", "display": "the Karun (SW Iran); 'compasses Cush', and Cush itself is disputed", "confidence": "contested" }
+      ],
+      "reads": "The text places a garden 'eastward, in Eden,' watered by a single river that parts into four heads. Two of those four, Hiddekel (Tigris) and Perath (Euphrates), are named without ambiguity and still run today, which has always anchored the garden somewhere in or above Mesopotamia. The tradition reads Eden as the point of origin: the place where rivers, life, and humanity begin together.",
+      "evidence": "Because the Tigris and Euphrates now run roughly parallel and meet near the head of the Persian Gulf (rather than splitting from one source), a literal four-headed river has no modern counterpart. The leading reconstruction (Juris Zarins; James Sauer; Farouk El-Baz's satellite radar) puts the convergence at the Gulf head, drowned by post-glacial sea-level rise around 4000 BCE, with Pishon as the now-dry Wadi al-Batin draining gold-bearing Arabia and Gihon as the Karun. It is a real geomorphological argument, and entirely unproven: no marine archaeology has tested it, and the identification of 'Cush' remains contested.",
+      "contested": {
+        "id": "RL-006",
+        "title": "Where were Pishon and Gihon, and can Eden be located?",
+        "summary": "Two of Eden's four rivers are unmistakable (Tigris, Euphrates); two are not. The favored modern reconstruction submerges Eden under the head of the Persian Gulf and reads Pishon as the fossil Wadi al-Batin channel (gold-bearing Arabia = 'Havilah') and Gihon as the Karun, based on NASA/Shuttle satellite imagery of dry Arabian riverbeds and post-glacial flooding c. 4000 BCE. Against it: no marine archaeology supports a submerged Eden, the 'Cush' that Gihon compasses is normally Nubia (geographically impossible here), and rival candidates exist (e.g. the Karkheh for the fourth river).",
+        "status": "Shipped as contested: Tigris and Euphrates are solid; Pishon, Gihon, and the location of the garden are presented as reasoned candidates, never as settled fact. See RESEARCH_LOG.md RL-006.",
+        "confidence": "contested"
+      },
+      "sources": [
+        "James A. Sauer, 'The River Runs Dry,' Biblical Archaeology Review 22:4 (1996).",
+        "Juris Zarins, Persian-Gulf-oasis hypothesis (Dora Jane Hamblin, 'Has the Garden of Eden been located at last?,' Smithsonian, May 1987).",
+        "Farouk El-Baz, Space Shuttle SIR-C radar of the fossil 'Kuwait River' channel, N. Arabia.",
+        "National Geographic, 'Was the Garden of Eden real?' (overview of competing views)."
+      ]
+    },
+    {
+      "id": "ararat",
+      "name": "Ararat",
+      "subtitle": "where the ark came to rest",
+      "scripture": "Genesis 8:4",
+      "coordinates": [44.3, 39.7],
+      "kind": "mountain",
+      "confidence": "contested",
+      "appearsAt": { "ussher": -2347, "lxx": -3257 },
+      "identifications": [
+        { "label": "The region", "display": "'the mountains of Ararat' = the highlands of Urartu / Armenia", "confidence": "solid" },
+        { "label": "The single peak", "display": "traditionally Mt Ararat (Ağrı Dağı), eastern Turkey", "confidence": "contested" }
+      ],
+      "reads": "After the Flood, the ark grounds 'upon the mountains of Ararat.' The phrasing is plural: a mountainous region, not a named summit. Later tradition fixed the resting place on the great snow-capped cone of Ağrı Dağı, and 'Mount Ararat' became the popular image.",
+      "evidence": "'Ararat' is the Hebrew form of Urartu, a well-attested Iron-Age kingdom (9th–6th c. BCE) centered on the Armenian highlands around Lake Van, so the region is on firm historical ground. Pinning the landing to one specific peak is later interpretation, not text; modern 'ark-search' claims on Ağrı Dağı have not produced verifiable evidence.",
+      "contested": {
+        "id": "ARARAT-PEAK",
+        "title": "A region, or a specific summit?",
+        "summary": "Scripture says 'mountains of Ararat' (a range), and Ararat is securely the kingdom of Urartu in the Armenian highlands. The identification with the single peak Ağrı Dağı is a later tradition; recurring expeditions claiming ark remains there have not yielded evidence that withstands scrutiny.",
+        "status": "Region shown as solid (Urartu/Armenian highlands); the single-peak identification is shown as contested tradition.",
+        "confidence": "contested"
+      },
+      "sources": [
+        "Standard scholarship identifying biblical Ararat with the kingdom of Urartu (Armenian highlands).",
+        "Genesis 8:4 ('the mountains of Ararat', plural region)."
+      ]
+    },
+    {
+      "id": "babel",
+      "name": "Shinar & Babel",
+      "subtitle": "the plain, the city, and the tower",
+      "scripture": "Genesis 11:1–9",
+      "coordinates": [44.42, 32.54],
+      "kind": "site",
+      "confidence": "solid",
+      "appearsAt": { "ussher": -2241, "lxx": -3149 },
+      "identifications": [
+        { "label": "Shinar", "display": "the plain of Babylonia / Sumer, southern Mesopotamia", "confidence": "solid" },
+        { "label": "Babel", "display": "Babylon: Akkadian bāb-ilim, 'gate of the god'", "confidence": "solid" },
+        { "label": "The tower", "display": "traditionally the great ziggurat Etemenanki at Babylon", "confidence": "contested" }
+      ],
+      "reads": "Humanity, of one language, settles 'a plain in the land of Shinar' and builds a city and a tower 'with its top in the heavens'; the languages are confounded and the people scattered. The story turns on a Hebrew pun: Babel sounds like balal, 'to confuse.'",
+      "evidence": "Shinar is the biblical name for southern Mesopotamia (Babylonia/Sumer), and Babel is Babylon, but the Akkadian name bāb-ilim means 'gate of the god,' not 'confusion'; the Hebrew etymology is a deliberate wordplay, not the city's own meaning. The 'tower' is usually read as a ziggurat (most often Babylon's Etemenanki), the stepped temple-towers that did rise across the Mesopotamian plain. Which structure, and when, is not fixed by the text.",
+      "contested": {
+        "id": "BABEL-TOWER",
+        "title": "Which tower?",
+        "summary": "The location (Babylon, on the plain of Shinar/Babylonia) is secure. The tower is conventionally identified with a Mesopotamian ziggurat, most often Etemenanki at Babylon, but the text names no structure, and the date floats; that specific identification is interpretive.",
+        "status": "Shinar and Babel = Babylonia/Babylon shown as solid; the specific tower (Etemenanki) shown as contested tradition.",
+        "confidence": "contested"
+      },
+      "sources": [
+        "Akkadian bāb-ilim ('gate of the god') vs. Hebrew balal ('to confuse'): standard philology.",
+        "Identification of Shinar with Babylonia/Sumer; Etemenanki ziggurat at Babylon."
+      ]
+    }
+  ]
+}

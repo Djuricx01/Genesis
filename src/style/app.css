@@ -1,0 +1,971 @@
+/* Genesis: antique design system (§8). Map colors live in src/style/palette.ts; these
+   variables mirror them for the UI chrome. Type: IM Fell English (engraved display) +
+   EB Garamond (body). */
+
+:root {
+  --paper: #efe5cb;
+  --paper-warm: #e7d8b4;
+  --ink: #3c2c18;
+  --ink-soft: #5a4327;
+  --line: #b29b73;
+  --accent: #7c3f29; /* madder */
+  --gold: #9c7a3c;
+
+  --conf-solid: #3f6b4a;
+  --conf-contested: #9a6b1e;
+  --conf-weak: #7a7163;
+
+  --serif-display: "IM Fell English", Baskerville, "Times New Roman", serif;
+  --serif-body: "EB Garamond", Garamond, Georgia, serif;
+
+  --shadow: 0 6px 22px rgba(40, 28, 12, 0.28);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app,
+#map {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: var(--serif-body);
+  color: var(--ink);
+  background: var(--paper);
+  overflow: hidden;
+}
+
+#app {
+  position: relative;
+}
+
+#map {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Paper grain + vignette overlay: cosmetic only, never intercepts pointer events. */
+#app::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+  box-shadow: inset 0 0 200px 40px rgba(60, 44, 24, 0.45);
+}
+
+/* --- Map markers (both lenses) --- */
+/* A marker shows only when BOTH gates pass: the timeline has reached it (.is-present) AND its
+   lens is the active perspective (.lens-active). That dual gate is what lets the two lenses
+   share one base map (§10). */
+.cradle-marker,
+.scripture-marker {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--serif-display);
+  /* MapLibre sets an inline `opacity` on every marker element (occlusion handling), which would
+     override the timeline fade, so the opacity gates use !important to win over it. (`transform`
+     is owned by MapLibre for positioning, so we don't animate it.) The lens gate below uses
+     display:none, which beats inline opacity on its own. */
+  opacity: 0 !important;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+/* Lens gate (HARD): markers belonging to the inactive perspective are removed entirely: so
+   switching to Scientific genuinely makes Eden et al. disappear, not just turn transparent. */
+.cradle-marker:not(.lens-active),
+.scripture-marker:not(.lens-active) {
+  display: none;
+}
+/* Timeline gate (SOFT): within the active lens, a marker fades in once its year is reached. */
+.cradle-marker.lens-active.is-present,
+.scripture-marker.lens-active.is-present {
+  opacity: 1 !important;
+  pointer-events: auto;
+}
+.cradle-dot,
+.scripture-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #c9a24a, var(--accent));
+  border: 1.5px solid var(--ink);
+  box-shadow: 0 0 0 4px rgba(156, 122, 60, 0.25), 0 1px 3px rgba(0, 0, 0, 0.4);
+  flex: none;
+}
+.cradle-label,
+.scripture-label {
+  font-size: 15px;
+  color: var(--ink);
+  letter-spacing: 0.4px;
+  text-shadow: 0 1px 0 rgba(255, 250, 235, 0.8);
+  white-space: nowrap;
+}
+.cradle-marker:hover .cradle-dot,
+.scripture-marker:hover .scripture-dot {
+  box-shadow: 0 0 0 6px rgba(156, 122, 60, 0.35), 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Scriptural markers read in indigo to match their rivers. The Eden "zone" gets a soft halo
+   (a place, not a point); contested sites get the gilt-amber confidence ink. */
+.scripture-dot {
+  background: radial-gradient(circle at 35% 30%, #8a93b8, var(--scripture-ink, #3f4f7a));
+}
+.scripture-marker.conf-contested .scripture-dot {
+  background: radial-gradient(circle at 35% 30%, #d8b15a, var(--conf-contested));
+  box-shadow: 0 0 0 4px rgba(154, 107, 30, 0.22), 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+.scripture-marker.is-zone .scripture-dot {
+  width: 17px;
+  height: 17px;
+  box-shadow: 0 0 0 7px rgba(154, 107, 30, 0.18), 0 0 18px 4px rgba(154, 107, 30, 0.35);
+}
+
+/* --- Timeline --- */
+.timeline {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%);
+  width: min(680px, calc(100% - 40px));
+  background: linear-gradient(var(--paper), var(--paper-warm));
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 12px 18px 14px;
+  text-align: center;
+}
+.timeline-readout {
+  font-family: var(--serif-display);
+  font-size: 26px;
+  letter-spacing: 1px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.timeline-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.timeline-play {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 13px;
+}
+.timeline-play::before {
+  content: "▶";
+}
+.timeline-play.is-playing::before {
+  content: "❚❚";
+  font-size: 11px;
+}
+.timeline-play:hover {
+  background: var(--paper-warm);
+}
+.timeline-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--ink-soft), var(--line));
+  outline: none;
+}
+.timeline-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #d8b15a, var(--gold));
+  border: 1.5px solid var(--ink);
+  cursor: pointer;
+}
+.timeline-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #d8b15a, var(--gold));
+  border: 1.5px solid var(--ink);
+  cursor: pointer;
+}
+.timeline-ends {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 5px;
+}
+
+/* --- Dossier panel (right drawer): shared by both lenses (§10) --- */
+.dossier-panel {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(420px, 92%);
+  background: linear-gradient(var(--paper), var(--paper-warm));
+  border-left: 1px solid var(--line);
+  box-shadow: -8px 0 28px rgba(40, 28, 12, 0.3);
+  padding: 26px 26px 40px;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.35s ease;
+}
+.dossier-panel.is-open {
+  transform: translateX(0);
+}
+/* The lens accent: section titles + header rule pick up --accent, so the scriptural lens reads
+   in indigo and the scientific one in madder: same layout, distinct hand. */
+.dossier-panel.lens-scripture {
+  --accent: #3f4f7a;
+  border-left-color: #6a6e90;
+}
+.panel-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  border: 0;
+  background: none;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.panel-header h2 {
+  font-family: var(--serif-display);
+  font-size: 28px;
+  margin: 0 0 2px;
+}
+.panel-subtitle {
+  font-style: italic;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+.panel-river {
+  font-size: 14px;
+  margin: 0;
+}
+.panel-river span {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-right: 6px;
+}
+.panel-section-title {
+  font-family: var(--serif-display);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 4px;
+  margin: 22px 0 10px;
+}
+.panel-prose {
+  font-size: 16px;
+  line-height: 1.55;
+  margin: 0 0 8px;
+}
+.milestones {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.milestone {
+  padding: 8px 0;
+  border-bottom: 1px dotted var(--line);
+}
+.milestone-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.milestone-label {
+  font-weight: 600;
+  font-size: 15px;
+}
+.milestone-value {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.panel-sources {
+  font-size: 13px;
+  color: var(--ink-soft);
+  padding-left: 18px;
+  line-height: 1.4;
+}
+
+/* Confidence chips & popup tags */
+.conf-chip,
+.popup-conf {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 1px 7px;
+  border-radius: 10px;
+  border: 1px solid currentColor;
+}
+.conf-solid {
+  color: var(--conf-solid);
+}
+.conf-contested {
+  color: var(--conf-contested);
+}
+.conf-weak {
+  color: var(--conf-weak);
+}
+
+.contested-note {
+  background: rgba(154, 107, 30, 0.1);
+  border: 1px solid var(--conf-contested);
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin: 18px 0 6px;
+}
+.contested-head {
+  font-weight: 600;
+  color: var(--conf-contested);
+  margin-bottom: 6px;
+}
+.contested-note p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 6px;
+}
+.contested-status {
+  font-style: italic;
+  font-size: 12.5px !important;
+  color: var(--ink-soft);
+}
+
+/* MapLibre popup → parchment */
+.genesis-popup .maplibregl-popup-content {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-family: var(--serif-body);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  padding: 8px 12px;
+}
+.genesis-popup .maplibregl-popup-tip {
+  border-top-color: var(--paper);
+  border-bottom-color: var(--paper);
+}
+.popup-era {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.popup-conf {
+  display: inline-block;
+  margin-top: 4px;
+}
+
+/* Title cartouche */
+.genesis-title {
+  position: absolute;
+  z-index: 3;
+  top: 18px;
+  left: 18px;
+  background: linear-gradient(var(--paper), var(--paper-warm));
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+  padding: 10px 16px;
+  max-width: 320px;
+}
+.genesis-title h1 {
+  font-family: var(--serif-display);
+  font-size: 22px;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+.genesis-title p {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* --- Perspective toggle (Scientific ⟷ Scriptural) --- */
+.perspective {
+  position: absolute;
+  z-index: 3;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  background: linear-gradient(var(--paper), var(--paper-warm));
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+}
+.perspective-option {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--serif-display);
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  color: var(--ink-soft);
+  padding: 6px 18px;
+  border-radius: 999px;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.perspective-option:hover {
+  color: var(--ink);
+}
+.perspective-option.is-active {
+  color: var(--paper);
+  background: var(--accent);
+}
+/* The scriptural option, when active, takes the indigo lens accent. */
+.perspective-option[data-lens="scripture"].is-active {
+  background: #3f4f7a;
+}
+
+/* --- Scriptural-only controls (chronology toggle + spectrum trigger), under the perspective
+   toggle, shown only when the scriptural lens is active. --- */
+.scriptural-controls {
+  position: absolute;
+  z-index: 3;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.scriptural-controls.is-shown {
+  display: flex;
+}
+
+.chronology {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 5px 14px;
+  background: linear-gradient(var(--paper), var(--paper-warm));
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+.chronology-label {
+  font-family: var(--serif-display);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+}
+.chronology-group {
+  display: flex;
+  gap: 2px;
+}
+.chronology-option {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--serif-body);
+  font-size: 13px;
+  color: var(--ink-soft);
+  padding: 3px 12px;
+  border-radius: 999px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.chronology-option:hover {
+  color: var(--ink);
+}
+.chronology-option.is-active {
+  background: #3f4f7a;
+  color: var(--paper);
+}
+.chronology-caption {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 11.5px;
+  font-style: italic;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.spectrum-trigger {
+  border: 1px solid var(--line);
+  background: linear-gradient(var(--paper), var(--paper-warm));
+  cursor: pointer;
+  font-family: var(--serif-display);
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  color: #3f4f7a;
+  padding: 6px 16px;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+}
+.spectrum-trigger:hover {
+  color: var(--ink);
+}
+
+/* --- Interpretive spectrum overlay (§2: show the tensions, endorse nothing) --- */
+.spectrum-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px;
+  overflow-y: auto;
+  background: rgba(40, 28, 12, 0.45);
+}
+.spectrum-overlay.is-open {
+  display: flex;
+}
+.spectrum-card {
+  position: relative;
+  width: min(860px, 100%);
+  margin: auto 0;
+  background: linear-gradient(var(--paper), var(--paper-warm));
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 30px 34px 36px;
+}
+.spectrum-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  border: 0;
+  background: none;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.spectrum-title {
+  font-family: var(--serif-display);
+  font-size: 28px;
+  margin: 0 0 6px;
+}
+.spectrum-intro {
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0 0 20px;
+  max-width: 62ch;
+}
+.spectrum-views {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+@media (max-width: 680px) {
+  .spectrum-views {
+    grid-template-columns: 1fr;
+  }
+}
+.spectrum-view {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 16px;
+  background: rgba(255, 250, 235, 0.4);
+}
+.spectrum-view-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.spectrum-view-head h3 {
+  font-family: var(--serif-display);
+  font-size: 18px;
+  margin: 0;
+}
+.spectrum-chrono {
+  font-size: 11px;
+  font-style: italic;
+  color: var(--ink-soft);
+  text-align: right;
+  flex: none;
+}
+.spectrum-reads {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 8px;
+}
+.spectrum-strength,
+.spectrum-strain {
+  font-size: 13px;
+  line-height: 1.45;
+  margin: 4px 0;
+}
+.spectrum-strength span,
+.spectrum-strain span {
+  display: inline-block;
+  font-family: var(--serif-display);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 0 6px;
+  border-radius: 6px;
+  margin-right: 6px;
+}
+.spectrum-strength span {
+  color: var(--conf-solid);
+  border: 1px solid var(--conf-solid);
+}
+.spectrum-strain span {
+  color: var(--conf-contested);
+  border: 1px solid var(--conf-contested);
+}
+.spectrum-convergence {
+  margin-top: 18px;
+  background: rgba(63, 79, 122, 0.1);
+  border: 1px solid #3f4f7a;
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.spectrum-convergence-head {
+  font-family: var(--serif-display);
+  font-weight: 600;
+  color: #3f4f7a;
+  margin-bottom: 6px;
+}
+.spectrum-convergence p {
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* --- "How to read this map" legend (bottom-left, collapsible) --- */
+.legend {
+  position: absolute;
+  z-index: 3;
+  left: 18px;
+  bottom: 26px;
+  display: flex;
+  flex-direction: column-reverse; /* button at the bottom, card opens upward */
+  align-items: flex-start;
+  gap: 8px;
+}
+.legend-toggle {
+  border: 1px solid var(--line);
+  background: linear-gradient(var(--paper), var(--paper-warm));
+  cursor: pointer;
+  font-family: var(--serif-display);
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  color: var(--ink);
+  padding: 7px 16px;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+}
+.legend-toggle:hover {
+  background: var(--paper-warm);
+}
+.legend-card {
+  display: none;
+  width: min(310px, 70vw);
+  background: linear-gradient(var(--paper), var(--paper-warm));
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 14px 16px 6px;
+}
+.legend.is-open .legend-card {
+  display: block;
+}
+.legend-group {
+  margin-bottom: 12px;
+}
+.legend-group-title {
+  font-family: var(--serif-display);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--accent);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 3px;
+  margin-bottom: 7px;
+}
+.legend-card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.legend-card li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 6px 0;
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.legend-card .conf-chip {
+  flex: none;
+}
+
+/* Swatches mirror the real map paint (palette.ts / the boundary + scriptural layer styling). */
+.swatch {
+  flex: none;
+  width: 30px;
+  height: 3px;
+  border-radius: 2px;
+}
+.swatch-border-sharp {
+  height: 2px;
+  background: var(--accent);
+}
+.swatch-border-fuzzy {
+  height: 6px;
+  background: var(--accent);
+  opacity: 0.55;
+  filter: blur(2px);
+  border-radius: 4px;
+}
+.swatch-dot-science,
+.swatch-dot-scripture {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+}
+.swatch-dot-science {
+  background: radial-gradient(circle at 35% 30%, #c9a24a, var(--accent));
+}
+.swatch-dot-scripture {
+  background: radial-gradient(circle at 35% 30%, #8a93b8, #3f4f7a);
+}
+.swatch-river-solid {
+  height: 2px;
+  background: #3f4f7a;
+}
+.swatch-river-dashed {
+  height: 2px;
+  background: repeating-linear-gradient(90deg, #3f4f7a 0 4px, transparent 4px 7px);
+}
+.swatch-eden-zone {
+  width: 26px;
+  height: 13px;
+  background: rgba(154, 107, 30, 0.22);
+  border: 1px dashed var(--conf-contested);
+  border-radius: 3px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Phase 7: Accessibility
+ * ───────────────────────────────────────────────────────────────────────────── */
+
+/* A visible, on-brand focus ring for keyboard users (mouse clicks don't trigger it). */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.timeline-slider:focus-visible {
+  outline-offset: 6px;
+}
+
+/* Respect "reduce motion": kill transitions/animations (marker fade, panel slide, modal, etc.).
+   The map's camera eases are zeroed in JS (see src/map/index.ts). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --- About & credits modal + its title trigger (Phase 7) --- */
+.title-about {
+  margin-top: 8px;
+  border: 1px solid var(--line);
+  background: rgba(255, 250, 235, 0.4);
+  color: var(--accent);
+  font-family: var(--serif-display);
+  font-size: 11.5px;
+  letter-spacing: 0.4px;
+  padding: 3px 11px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.title-about:hover {
+  background: var(--paper-warm);
+  color: var(--ink);
+}
+.about-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 20px;
+  overflow-y: auto;
+  background: rgba(40, 28, 12, 0.45);
+}
+.about-overlay.is-open {
+  display: flex;
+}
+.about-card {
+  position: relative;
+  width: min(820px, 100%);
+  margin: auto 0;
+  background: linear-gradient(var(--paper), var(--paper-warm));
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 30px 34px 34px;
+}
+.about-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  border: 0;
+  background: none;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.about-title {
+  font-family: var(--serif-display);
+  font-size: 28px;
+  margin: 0 0 8px;
+}
+.about-intro {
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 20px;
+  max-width: 64ch;
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+}
+.about-section h3 {
+  font-family: var(--serif-display);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--accent);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 3px;
+  margin: 0 0 7px;
+}
+.about-section p,
+.about-section li {
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0 0 6px;
+}
+.about-section ul {
+  margin: 0;
+  padding-left: 16px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Phase 7: Mobile / narrow screens. The chrome is absolutely positioned for a
+ * desktop canvas; on a phone it must compact and stop overlapping.
+ * ───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .genesis-title {
+    top: 10px;
+    left: 10px;
+    max-width: 46%;
+    padding: 7px 11px;
+  }
+  .genesis-title h1 {
+    font-size: 17px;
+  }
+  .genesis-title p {
+    display: none; /* reclaim vertical space on small screens */
+  }
+
+  .perspective {
+    top: 12px;
+  }
+  .perspective-option {
+    padding: 6px 13px;
+    font-size: 13px;
+  }
+
+  .scriptural-controls {
+    top: 58px;
+    width: calc(100% - 20px);
+  }
+  .chronology {
+    padding: 4px 10px;
+    gap: 6px;
+  }
+  .chronology-option {
+    padding: 3px 9px;
+    font-size: 12px;
+  }
+
+  .timeline {
+    width: calc(100% - 16px);
+    bottom: 12px;
+    padding: 9px 12px 11px;
+  }
+  .timeline-readout {
+    font-size: 21px;
+  }
+
+  /* Lift the legend clear above the (now full-width, ~110px tall) timeline. */
+  .legend {
+    bottom: 132px;
+    left: 10px;
+  }
+  .legend-card {
+    width: min(300px, 86vw);
+  }
+
+  /* The detail drawer takes the whole screen; its close button is the way out. */
+  .dossier-panel {
+    width: 100%;
+  }
+
+  .spectrum-overlay,
+  .about-overlay {
+    padding: 20px 12px;
+  }
+  .spectrum-card,
+  .about-card {
+    padding: 24px 18px 28px;
+  }
+}

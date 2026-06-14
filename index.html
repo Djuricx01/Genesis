@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Genesis: Where Civilization Began</title>
+    <meta
+      name="description"
+      content="An antique-style interactive map of how and where civilization began, told through scientific and scriptural lenses on the same ground."
+    />
+
+    <!--
+      POC: period typefaces via Google Fonts for speed (IM Fell English = engraved title
+      feel; EB Garamond = body). Phase 7 polish will self-host these per spec §8.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IM+Fell+English:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <div id="map" aria-label="Map of the cradles of civilization"></div>
+      <!-- UI panels (timeline, perspective toggle, cradle detail) are mounted by TS. -->
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

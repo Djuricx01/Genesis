@@ -1,0 +1,205 @@
+{
+  "_convention": "Dates are AxisYear (proleptic Gregorian decimal, no year zero; see src/timeline/era.ts). Negative = BCE. Prose is original, synthesized, neutral. Every dated claim carries confidence + source. [VERIFY] / contested items must have a complete RESEARCH_LOG entry before they are treated as shipped (see docs/RESEARCH_LOG.md).",
+  "milestoneModel": {
+    "note": "The four developmental milestones are kept separate on purpose. Conflating them is the most common error. A cradle does not 'have' a single founding date.",
+    "keys": ["farming", "cities", "writing", "state"]
+  },
+  "cradles": [
+    {
+      "id": "mesopotamia",
+      "name": "Mesopotamia",
+      "subtitle": "Tigris & Euphrates · southern Iraq",
+      "coordinates": [46.0, 31.0],
+      "riverSystem": "Tigris–Euphrates",
+      "appearsAt": -9999,
+      "milestones": [
+        {
+          "key": "farming",
+          "label": "Farming / sedentism",
+          "display": "~10,000–8000 BCE",
+          "appearsAt": -9999,
+          "confidence": "solid",
+          "source": "Synthesis of Fertile Crescent Neolithic record (e.g. Nissen, The Early History of the Ancient Near East)."
+        },
+        {
+          "key": "cities",
+          "label": "Cities",
+          "display": "Uruk period, ~4000–3500 BCE",
+          "appearsAt": -3999,
+          "confidence": "solid",
+          "source": "Uruk-period urbanization; standard Mesopotamian archaeology."
+        },
+        {
+          "key": "writing",
+          "label": "Writing",
+          "display": "proto-cuneiform ~3300 BCE (range ~3600–3200)",
+          "appearsAt": -3299,
+          "confidence": "solid",
+          "source": "Proto-cuneiform tablets, Uruk IV; token-to-sign accounting lineage (Schmandt-Besserat)."
+        },
+        {
+          "key": "state",
+          "label": "First unified state",
+          "display": "Akkad, ~2334 BCE (Sargon)",
+          "appearsAt": -2333,
+          "confidence": "solid",
+          "source": "Akkadian Empire under Sargon; conventional chronology."
+        }
+      ],
+      "how": "Two unpredictable rivers crossing flat alluvium forced a choice: coordinate irrigation, or starve. Coordination produced barley surplus; surplus produced people who did not farm: priests, scribes, soldiers, administrators. Temples became the accounting hubs of that surplus, and the clay tokens used to track it hardened, over centuries, into the first writing: cuneiform born from bookkeeping, not poetry. Stratified cities followed, then the first empire that stitched them together under Sargon of Akkad.",
+      "onItsOwnTerms": "The textbook pathway: surplus → specialization → hierarchy → cities → record-keeping → state. It is the template precisely because it was first to leave a written record; the danger is treating its sequence as the *only* valid one.",
+      "sources": [
+        "H. Nissen, The Early History of the Ancient Near East.",
+        "D. Schmandt-Besserat, work on the token-to-cuneiform accounting lineage."
+      ]
+    },
+    {
+      "id": "caral-supe",
+      "name": "Caral-Supe (Norte Chico)",
+      "subtitle": "Supe, Pativilca & Fortaleza valleys · coastal Peru",
+      "coordinates": [-77.7, -10.9],
+      "riverSystem": "Supe / Pativilca / Fortaleza (small coastal rivers) + the Pacific",
+      "appearsAt": -3499,
+      "milestones": [
+        {
+          "key": "farming",
+          "label": "Sedentism / irrigation",
+          "display": "~3500–3000 BCE",
+          "appearsAt": -3499,
+          "confidence": "solid",
+          "source": "Norte Chico Late Archaic settlement record (Haas & Creamer; Shady Solís)."
+        },
+        {
+          "key": "cities",
+          "label": "Monumental centers",
+          "display": "Huaricanga ~3500 BCE; Caral ~2627 BCE",
+          "appearsAt": -2626,
+          "confidence": "solid",
+          "source": "Radiocarbon dates from Caral and Norte Chico platform mounds (Shady Solís et al.; Haas, Creamer & Ruiz)."
+        },
+        {
+          "key": "writing",
+          "label": "Writing",
+          "display": "none known: quipu/knot-recording debated, likely later",
+          "appearsAt": null,
+          "confidence": "weak",
+          "source": "No script attested; quipu as a recording system is debated and probably post-dates this horizon."
+        },
+        {
+          "key": "state",
+          "label": "First unified state",
+          "display": "no consensus: cooperative regional network, not a kings-and-palaces model",
+          "appearsAt": null,
+          "confidence": "contested",
+          "source": "Interpretive debate; no evidence of a single unifying dynastic state."
+        }
+      ],
+      "how": "On a desert coast beside one of the richest fisheries on earth, the surplus that funded monumental society may have come as much from the sea as from the field. Cotton, grown with small-scale irrigation in narrow river valleys, was twisted into nets that harvested anchovy and sardine at scale; the protein freed labor to raise sunken plazas and platform mounds at Caral centuries before pottery or writing appear. How much of the engine was maritime versus agricultural is exactly the open question below.",
+      "onItsOwnTerms": "Caral-Supe organized a monumental society with cotton-net maritime technology and (at most) knot-recording, and arguably no writing, no pottery, and no obvious kings. Forcing it into the Mesopotamian template ('where is the writing? where is the bronze?') measures it against the wrong yardstick. It is its own pathway to complexity, not a deficient version of someone else's.",
+      "contested": {
+        "id": "RL-002",
+        "title": "Maritime-vs-agriculture (MFAC hypothesis)",
+        "summary": "Moseley's Maritime Foundations of Andean Civilization argues marine protein anchored the rise; the agricultural-catalyst view counters that irrigated crops (notably cotton, plus food plants) were decisive. Recent stable-isotope work (Pezo-Lanfranco et al., 2023) on 52 individuals from Caral and Áspero finds C3 plants dominant: over 70% of calories at inland Caral, 55–68% at coastal Áspero, with marine protein more important at the coast, read as weakening the strong maritime hypothesis in favour of crop-focused agriculture.",
+        "status": "Recent evidence tilts toward agriculture, but the field treats this as evolving, not closed: shipped as contested, not resolved. See RESEARCH_LOG.md RL-002.",
+        "confidence": "contested"
+      },
+      "sources": [
+        "M. Moseley, The Maritime Foundations of Andean Civilization (MFAC hypothesis).",
+        "J. Haas & W. Creamer, Norte Chico research.",
+        "R. Shady Solís et al., excavations and dating at Caral.",
+        "Pezo-Lanfranco, Machacuay et al. (2023), 'The diet at the onset of the Andean Civilization,' Am. J. Biological Anthropology (DOI 10.1002/ajpa.24445; PubMed 36787651)."
+      ]
+    },
+    {
+      "id": "egypt",
+      "name": "Egypt",
+      "subtitle": "Nile · Upper & Lower valley",
+      "coordinates": [32.5, 25.0],
+      "riverSystem": "Nile",
+      "appearsAt": -5499,
+      "milestones": [
+        { "key": "farming", "label": "Farming", "display": "settled Nile-valley agriculture ~5500 BCE (Faiyum A), distinct from earlier Saharan/Faiyum pastoralism (~7th millennium BP)", "appearsAt": -5499, "confidence": "solid", "source": "Faiyum A culture; Linseele et al. 2016 on Faiyum pastoralism; Britannica, Nile valley. See RESEARCH_LOG RL-004." },
+        { "key": "cities", "label": "Centers", "display": "Hierakonpolis / Naqada ~3500 BCE", "appearsAt": -3499, "confidence": "solid", "source": "Predynastic Upper Egyptian centers; standard Egyptology." },
+        { "key": "writing", "label": "Writing", "display": "proto-hieroglyphs ~3200 BCE", "appearsAt": -3199, "confidence": "solid", "source": "Abydos tomb U-j labels; early hieroglyphic record." },
+        { "key": "state", "label": "First state", "display": "unification of Upper & Lower Egypt under Narmer ~3150 BCE", "appearsAt": -3149, "confidence": "solid", "source": "Narmer Palette; Early Dynastic unification (per D-009)." }
+      ],
+      "how": "The Nile did something the Tigris and Euphrates never did: it flooded on schedule. A predictable annual inundation laying down fresh silt meant agriculture demanded less frantic collective water-engineering and rewarded a single coordinating authority: a divine kingship that read the river's rhythm. As the Sahara dried, people concentrated in the green ribbon of the valley; surplus, sacral monarchy, and an early administrative script converged into one of the world's first territorial states.",
+      "onItsOwnTerms": "Because the flood was reliable, Egypt leaned less on Mesopotamia's bottom-up irrigation bureaucracy and more on top-down sacred kingship, unifying a long thin valley early and durably. Writing here served royal and funerary display as much as accounting.",
+      "sources": [
+        "Britannica, Origins of agriculture: Nile valley.",
+        "Wikipedia, Ancient Egyptian agriculture (overview + Faiyum A).",
+        "Standard Egyptology on Naqada, Abydos, and the Narmer unification."
+      ]
+    },
+    {
+      "id": "indus",
+      "name": "Indus Valley",
+      "subtitle": "Indus & Ghaggar-Hakra · Pakistan / NW India",
+      "coordinates": [68.0, 27.0],
+      "riverSystem": "Indus & Ghaggar-Hakra",
+      "appearsAt": -6999,
+      "milestones": [
+        { "key": "farming", "label": "Farming", "display": "Mehrgarh ~7000 BCE", "appearsAt": -6999, "confidence": "solid", "source": "Mehrgarh Neolithic (Jarrige); standard South Asian archaeology." },
+        { "key": "cities", "label": "Cities", "display": "Early Harappan ~3300–2600; Mature (Mohenjo-daro, Harappa) ~2600–1900 BCE", "appearsAt": -2599, "confidence": "solid", "source": "Harappan urban phase (Kenoyer; Possehl)." },
+        { "key": "writing", "label": "Writing", "display": "Indus script ~2800–2600 BCE: UNDECIPHERED; do not overclaim 'literacy'", "appearsAt": -2599, "confidence": "contested", "source": "Indus script undeciphered; whether it encodes full language is debated (Parpola; Farmer/Sproat/Witzel)." },
+        { "key": "state", "label": "First state", "display": "no consensus: standardization without obvious kings or palaces; read as a coordinated, possibly decentralized network", "appearsAt": null, "confidence": "contested", "source": "Absence of clear royal iconography/monumental tombs; integration via shared norms (per D-009)." }
+      ],
+      "how": "Two water systems (the monsoon and Himalayan snowmelt feeding the Indus) produced grain and cotton surplus at scale. What that surplus built is striking for what it lacks: gridded cities, standardized fired bricks, municipal drainage, and uniform weights across hundreds of kilometres, yet no palaces, no royal tombs, no obvious army. Integration seems to have run through trade and shared standards rather than a visible ruling dynasty.",
+      "onItsOwnTerms": "The Indus is the strongest warning against the king-and-palace template. Its uniformity implies coordination, but the political form behind it is invisible to us: possibly decentralized, possibly corporate. Calling it 'pre-literate' or 'stateless' says more about our categories than its sophistication.",
+      "sources": [
+        "G. Possehl, The Indus Civilization.",
+        "J. M. Kenoyer, Ancient Cities of the Indus Valley Civilization.",
+        "Debate on the Indus script (Parpola; Farmer, Sproat & Witzel)."
+      ]
+    },
+    {
+      "id": "china",
+      "name": "China",
+      "subtitle": "Yellow & Yangtze · Central Plains",
+      "coordinates": [112.5, 34.5],
+      "riverSystem": "Yellow (Huang He) & Yangtze",
+      "appearsAt": -6999,
+      "milestones": [
+        { "key": "farming", "label": "Farming", "display": "millet ~7000 BCE in the north (rice domestication in the south, comparably early)", "appearsAt": -6999, "confidence": "solid", "source": "Peiligang/Cishan millet; Yangtze rice; standard Chinese Neolithic archaeology." },
+        { "key": "cities", "label": "Cities", "display": "Erlitou ~1900–1500 BCE", "appearsAt": -1899, "confidence": "solid", "source": "Erlitou urban center, Yiluo basin." },
+        { "key": "writing", "label": "Writing", "display": "oracle-bone script ~1250 BCE (Wu Ding; radiocarbon ~1254–1197 BCE), NOT 1600, which is the dynasty's start", "appearsAt": -1249, "confidence": "solid", "source": "Wu Ding-reign oracle bones, radiocarbon-dated; earliest indisputable Chinese writing. See RESEARCH_LOG RL-003." },
+        { "key": "state", "label": "First state", "display": "first state-level society in the Central Plains: Erlitou / early Shang ~1900–1500 BCE; imperial unification of all China (Qin) is far later, 221 BCE", "appearsAt": -1899, "confidence": "contested", "source": "Erlitou's status as a state (and its identification with the Xia) is debated; early Shang is more securely a state (per D-009)." }
+      ],
+      "how": "Millet on the northern loess and rice along the Yangtze produced surplus; coordinating flood control and labour on the great rivers concentrated authority. But the Chinese path to literacy is distinctive: writing first appears not on ledgers but on oracle bones: ox scapulae and turtle plastrons heat-cracked to divine the will of royal ancestors. Bronze, too, served ritual and ancestor cult before commerce. Power here grew from the altar as much as the granary.",
+      "onItsOwnTerms": "China inverts the Mesopotamian story of writing-from-accounting: its earliest script is divinatory and royal, born in ritual communication with ancestors. Beware conflating the Shang dynasty's traditional start (~1600 BCE) with attested writing (~1250 BCE), and beware reading the much later Qin imperial unification back onto the cradle.",
+      "sources": [
+        "Oracle-bone radiocarbon dating; History of Information (earliest indisputable Chinese writing).",
+        "Scientific Data (2024), open oracle-bone-script dataset.",
+        "Standard archaeology of Erlitou and Shang (Anyang)."
+      ]
+    },
+    {
+      "id": "olmec",
+      "name": "Mesoamerica (Olmec)",
+      "subtitle": "Coatzacoalcos basin · Veracruz lowlands",
+      "coordinates": [-94.5, 18.0],
+      "riverSystem": "Coatzacoalcos & lowland rivers",
+      "appearsAt": -2499,
+      "milestones": [
+        { "key": "farming", "label": "Farming", "display": "maize, beans, squash ~2500–1500 BCE", "appearsAt": -2499, "confidence": "solid", "source": "Lowland Formative agriculture; standard Mesoamerican archaeology." },
+        { "key": "cities", "label": "Monumental centers", "display": "San Lorenzo monumental phase ~1200–900 BCE", "appearsAt": -1199, "confidence": "solid", "source": "San Lorenzo Tenochtitlán; colossal heads and platforms." },
+        { "key": "writing", "label": "Writing", "display": "Cascajal Block glyphs ~900 BCE: CONTESTED (no stratigraphy; unique; recent archaeometric support; weak provenance)", "appearsAt": -899, "confidence": "contested", "source": "Cambridge, Ancient Mesoamerica archaeometric analysis; Skidmore (Mesoweb); Wikipedia, Olmec hieroglyphs. See RESEARCH_LOG RL-005." },
+        { "key": "state", "label": "First state", "display": "no single unified state: regional centers / chiefdoms; 'mother culture vs. peer polities' debate", "appearsAt": null, "confidence": "contested", "source": "Olmec political organization debated; no evidence of one integrating state (per D-009)." }
+      ],
+      "how": "In the humid Gulf lowlands, maize surplus underwrote astonishing public works: multi-ton basalt colossal heads hauled from distant quarries, earthen platforms, and long-distance trade in jade and obsidian. Early glyphs and a developing calendar were tied to rulership and ritual. Whether one Olmec heartland seeded the rest of Mesoamerica, or several peer societies developed in parallel, is unresolved.",
+      "onItsOwnTerms": "The Olmec show monumental complexity without a demonstrable single state, and a writing claim (the Cascajal Block) that is genuinely disputed. Presenting them honestly means resisting both 'confirmed oldest New World writing' and the tidy 'mother culture' narrative.",
+      "contested": {
+        "id": "RL-005",
+        "title": "Cascajal Block: 'oldest New World writing'?",
+        "summary": "A serpentine slab incised with ~62 signs, attributed to the Olmec ~900 BCE and hailed as the earliest writing in the Americas. But it was recovered from a gravel quarry, not an excavation, so it has no stratigraphic context; it is unique, its signs run in unusual horizontal rows, and some observers found the engraving oddly fresh. Archaeometric and digital-imaging analysis since has found its symbols, material, and manufacture consistent with Formative-period Olmec work, supporting authenticity.",
+        "status": "Probably authentic, but provenance is weak: shipped as contested, not as confirmed 'oldest New World writing.' See RESEARCH_LOG.md RL-005.",
+        "confidence": "contested"
+      },
+      "sources": [
+        "Cambridge, Ancient Mesoamerica: archaeometric analysis of the Cascajal Block.",
+        "Skidmore, 'The Cascajal Block' (Mesoweb report).",
+        "Standard archaeology of San Lorenzo and the Olmec."
+      ]
+    }
+  ]
+}

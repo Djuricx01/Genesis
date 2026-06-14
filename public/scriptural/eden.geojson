@@ -1,0 +1,46 @@
+{
+  "type": "FeatureCollection",
+  "_note": "Hand-authored, illustrative geometry for the scriptural lens (Phase 4), following the Phase-1 hand-made-GeoJSON pattern (D-007). Coordinates are approximate and editorial, not surveyed — appropriate to an antique map and to the contested status of these features (RL-006). The `confidence` property drives fuzzy styling in src/map/style.ts exactly as `borderprecision` does for political boundaries (D-005).",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Eden (proposed zone)", "kind": "zone", "confidence": "contested" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[47.0, 29.4], [48.7, 29.3], [49.8, 29.9], [49.9, 30.9], [48.9, 31.3], [47.5, 31.1], [46.7, 30.4], [47.0, 29.4]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Tigris (Hiddekel)", "kind": "river", "confidence": "solid" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[42.3, 37.4], [43.3, 35.0], [44.4, 33.3], [45.3, 32.2], [46.5, 31.3], [47.4, 30.9]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Euphrates (Perath)", "kind": "river", "confidence": "solid" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[38.6, 38.9], [39.6, 36.6], [40.9, 35.0], [42.5, 34.0], [43.8, 33.1], [45.3, 31.8], [46.7, 31.0], [47.4, 30.9]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Pishon (Wadi al-Batin?)", "kind": "river", "confidence": "contested" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[43.6, 25.6], [44.6, 27.0], [45.6, 28.3], [46.6, 29.3], [47.4, 30.1], [47.7, 30.6]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Gihon (Karun?)", "kind": "river", "confidence": "contested" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[50.9, 32.2], [50.0, 31.6], [49.2, 31.0], [48.7, 30.6], [48.4, 30.3]]
+      }
+    }
+  ]
+}
