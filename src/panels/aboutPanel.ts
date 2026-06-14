@@ -65,6 +65,11 @@ export function createAboutPanel(): AboutPanel {
           encyclopedia text, no “myth/legend” framing.</p>
         </section>
       </div>
+
+      <p class="about-support">
+        Genesis is free and open-source. If it helps you, you can
+        <a href="https://ko-fi.com/djuricx" target="_blank" rel="noopener">buy me a coffee</a>.
+      </p>
     </div>
   `;
 

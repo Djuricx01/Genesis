@@ -897,6 +897,17 @@ body {
   margin: 0;
   padding-left: 16px;
 }
+.about-support {
+  margin: 20px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  text-align: center;
+}
+.about-support a {
+  color: var(--accent);
+  font-weight: 600;
+}
 
 /* ─────────────────────────────────────────────────────────────────────────────
  * Phase 7: Mobile / narrow screens. The chrome is absolutely positioned for a

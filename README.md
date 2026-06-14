@@ -36,10 +36,14 @@ npm run build    # static production build → dist/
 Proleptic Gregorian decimal, **no year zero**: `1.0` = 1 CE, `0.0` = 1 BCE, `-3000.0` = 3001 BCE.
 All conversion/display lives in `src/timeline/era.ts`. Never hand-roll year math elsewhere.
 
+## Support
+Genesis is free and open-source. If you find it useful, you can
+[buy me a coffee on Ko-fi](https://ko-fi.com/djuricx). Voluntary, and much appreciated.
+
 ## License
 Source code is **MIT** (see [`LICENSE`](LICENSE)): anyone can use it for anything, no strings attached.
 
 The map *data* keeps its own licenses. The historical boundary data
 ([aourednik/historical-basemaps](https://github.com/aourednik/historical-basemaps)) is **GPL-3.0**;
 the other datasets are listed in [`docs/DATA_SOURCES.md`](docs/DATA_SOURCES.md). Donations
-(e.g. Buy Me a Coffee) are voluntary appreciation and do not affect any of this.
+(e.g. Ko-fi) are voluntary appreciation and do not affect any of this.
