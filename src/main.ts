@@ -1,5 +1,6 @@
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./style/app.css";
+import { inject } from "@vercel/analytics";
 
 import { createGenesisMap } from "./map";
 import { addMarkers } from "./map/markers";
@@ -14,6 +15,9 @@ import { TIMELINE_MIN, TIMELINE_MAX } from "./timeline/era";
 import type { CradlesDoc, ScripturalDoc } from "./types";
 import cradlesDoc from "../data/dossier/cradles.json";
 import scripturalDoc from "../data/dossier/scriptural.json";
+
+// Initialize Vercel Web Analytics
+inject();
 
 const app = document.getElementById("app") as HTMLElement;
 const { cradles } = cradlesDoc as unknown as CradlesDoc;
