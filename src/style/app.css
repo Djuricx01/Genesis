@@ -452,6 +452,43 @@ body {
   background: #3f4f7a;
 }
 
+/* --- Rivers on/off (temporary control, top-right). Antique pill matching the other chrome;
+   river-ink when active, muted when the network is hidden. --- */
+.rivers-toggle {
+  position: absolute;
+  z-index: 3;
+  top: 18px;
+  right: 18px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  background: linear-gradient(var(--paper), var(--paper-warm));
+  cursor: pointer;
+  font-family: var(--serif-display);
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  color: var(--ink-soft);
+  padding: 7px 15px;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  transition: color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+.rivers-toggle:hover {
+  color: var(--ink);
+}
+.rivers-toggle.is-active {
+  color: #3f4f7a; /* river ink */
+  border-color: #6a6e90;
+}
+.rivers-toggle:not(.is-active) {
+  opacity: 0.85;
+}
+.rivers-toggle-glyph {
+  font-size: 16px;
+  line-height: 1;
+}
+
 /* --- Scriptural-only controls (chronology toggle + spectrum trigger), under the perspective
    toggle, shown only when the scriptural lens is active. --- */
 .scriptural-controls {
@@ -933,6 +970,14 @@ body {
   .perspective-option {
     padding: 6px 13px;
     font-size: 13px;
+  }
+
+  /* Compact the rivers pill and keep it clear of the centered perspective toggle. */
+  .rivers-toggle {
+    top: 12px;
+    right: 10px;
+    padding: 5px 11px;
+    font-size: 12px;
   }
 
   .scriptural-controls {

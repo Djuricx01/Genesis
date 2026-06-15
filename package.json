@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "data:download": "node data/pipeline/download.mjs",
     "data:build": "node data/pipeline/build-boundaries.mjs",
-    "data:all": "npm run data:download && npm run data:build"
+    "data:basemap": "node data/pipeline/basemap.mjs",
+    "data:all": "npm run data:download && npm run data:build && npm run data:basemap"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

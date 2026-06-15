@@ -33,6 +33,8 @@ export interface GenesisMap {
   setYear: (year: number) => void;
   /** Show one lens's thematic layers, hide the other's. Base map is shared (§10). */
   setLens: (lens: Lens) => void;
+  /** Show/hide the (dense 10m) river network. Temporary control: see panels/riversToggle.ts. */
+  setRiversVisible: (visible: boolean) => void;
   /** Set the antique-overlay blend opacity [0..1] (no-op unless an overlay is configured, Phase 6). */
   setOverlayOpacity: (opacity: number) => void;
 }
@@ -58,6 +60,16 @@ export function createGenesisMap(containerId: string): GenesisMap {
     "bottom-right",
   );
   map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
+
+  // Mobile render fix: MapLibre sizes its canvas from the container once, at construction, and its
+  // built-in `trackResize` only listens to the *window* resize event. In mobile in-app browsers
+  // (the Reddit bug report) the container's final height isn't settled when the map is built — and
+  // no window resize ever fires afterwards — so the canvas locks to a too-short height and paints
+  // only a top strip of the screen. Observing the container directly and calling resize() makes the
+  // canvas grow to fill it as soon as layout settles. resize() is cheap and idempotent.
+  if (typeof ResizeObserver !== "undefined") {
+    new ResizeObserver(() => map.resize()).observe(map.getContainer());
+  }
 
   // The timeline filter (§3). Swaps which polities are visible without re-fetching anything.
   let lastFilterYear: number | null = null;
@@ -139,5 +151,11 @@ export function createGenesisMap(containerId: string): GenesisMap {
     if (map.getLayer("antique-overlay")) map.setPaintProperty("antique-overlay", "raster-opacity", opacity);
   };
 
-  return { map, setYear, setLens, setOverlayOpacity };
+  // Rivers on/off (temporary control). Guarded for pre-load clicks; the style defaults to visible,
+  // which matches the toggle's initial state, so there's nothing to re-apply on load.
+  const setRiversVisible = (visible: boolean): void => {
+    if (map.getLayer("rivers")) map.setLayoutProperty("rivers", "visibility", visible ? "visible" : "none");
+  };
+
+  return { map, setYear, setLens, setOverlayOpacity, setRiversVisible };
 }

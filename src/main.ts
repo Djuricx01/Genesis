@@ -8,6 +8,7 @@ import { createTimeline } from "./timeline/slider";
 import { createDossierPanel, cradleToDossier, siteToDossier } from "./panels/dossierPanel";
 import { createSpectrumPanel } from "./panels/spectrumPanel";
 import { createLegend } from "./panels/legend";
+import { createRiversToggle } from "./panels/riversToggle";
 import { createAboutPanel } from "./panels/aboutPanel";
 import { createPerspectiveToggle, type Lens } from "./perspective";
 import { createChronologyToggle } from "./chronology";
@@ -37,7 +38,7 @@ title.innerHTML = `<h1>Genesis</h1><p>Where civilization began. Two lenses on th
 title.querySelector(".title-about")?.addEventListener("click", () => aboutPanel.open());
 app.appendChild(title);
 
-const { map, setYear, setLens } = createGenesisMap("map");
+const { map, setYear, setLens, setRiversVisible } = createGenesisMap("map");
 
 const panel = createDossierPanel();
 app.appendChild(panel.element);
@@ -47,6 +48,10 @@ app.appendChild(spectrumPanel.element);
 
 const legend = createLegend();
 app.appendChild(legend.element);
+
+// Temporary rivers on/off control (top-right). Default on, to honor the "more rivers" request.
+const riversToggle = createRiversToggle({ initial: true, onChange: setRiversVisible });
+app.appendChild(riversToggle.element);
 
 // Two marker groups over the same ground. Each carries a timeline gate (appearsAt) and a lens
 // gate (only the active perspective's group is shown).

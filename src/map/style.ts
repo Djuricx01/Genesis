@@ -59,8 +59,8 @@ export function buildStyle(): StyleSpecification {
     // No `glyphs` key: the POC has no text layers (cradles use HTML markers), and MapLibre's
     // validator rejects `glyphs: undefined`: the key must be a string URL or absent entirely.
     sources: {
-      land: { type: "geojson", data: asset("basemap/ne_110m_land.json") },
-      rivers: { type: "geojson", data: asset("basemap/ne_110m_rivers.json") },
+      land: { type: "geojson", data: asset("basemap/ne_50m_land.json") },
+      rivers: { type: "geojson", data: asset("basemap/ne_10m_rivers.json") },
       boundaries: { type: "geojson", data: asset(ACTIVE_BOUNDARY_SOURCE.url) },
       // Scriptural lens (§10): the Eden zone + the four rivers (Phase 4). Hand-authored,
       // illustrative geometry: see public/scriptural/eden.geojson.

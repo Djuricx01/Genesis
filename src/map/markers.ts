@@ -50,7 +50,14 @@ export function addMarkers<T extends MarkerItem>(
       onSelect(item);
     });
 
-    new maplibregl.Marker({ element: el, anchor: "center" }).setLngLat(item.coordinates).addTo(map);
+    // Anchor the DOT on the coordinate, not the whole [dot][label] pill. With anchor:"center"
+    // the pill's midpoint sat on the point, shoving the dot ~half-a-label-width WEST — a fixed
+    // pixel offset, so zoomed in it looked roughly right but zoomed out it drifted hundreds of km
+    // (Caral-Supe, on the Peru coast, landed in the Pacific). anchor:"left" puts the dot's left
+    // edge on the point; the -6.5px offset (half the 13px dot) centers the dot exactly on it.
+    new maplibregl.Marker({ element: el, anchor: "left", offset: [-6.5, 0] })
+      .setLngLat(item.coordinates)
+      .addTo(map);
     els.push({ el, item });
   }
 
