@@ -14,6 +14,7 @@
     "data:all": "npm run data:download && npm run data:build"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "maplibre-gl": "^4.7.1"
   },
   "devDependencies": {
